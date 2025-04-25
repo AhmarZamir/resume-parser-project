@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Results</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+    <div class="container">
+        <h1 class="title has-text-centered">Top Matched Candidates</h1>
+        
+        <div class="box has-text-centered">
+            <h2 class="subtitle">Candidates Ranked by Match Percentage</h2>
+            <img src="{{ url_for('static', filename='top_candidates.png') }}" alt="Top Candidates Chart" style="max-width:100%;">
+        </div>
+
+        {% for candidate in candidates %}
+        <div class="box">
+            <h2 class="subtitle">{{ candidate.name }}</h2>
+            <p><strong>Email:</strong> {{ candidate.email }}</p>
+            <p><strong>Phone:</strong> {{ candidate.phone }}</p>
+            <p><strong>Address:</strong> {{ candidate.address }}</p>
+            <p><strong>Matched Skills:</strong> {{ candidate.skills | join(', ') }}</p>
+            <p><strong>Match Percentage:</strong> {{ candidate.percentage | round(2) }}%</p>
+
+            <figure class="image is-128x128">
+                <img src="{{ url_for('static', filename=candidate.name + '_bar_chart.png') }}" alt="Skill Bar Chart">
+            </figure>
+            <figure class="image is-128x128">
+                <img src="{{ url_for('static', filename=candidate.name + '_pie_chart.png') }}" alt="Skill Pie Chart">
+            </figure>
+        </div>
+        {% endfor %}
+
+        <div class="has-text-centered">
+            <a class="button is-info" href="{{ url_for('index') }}">Upload More</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>
